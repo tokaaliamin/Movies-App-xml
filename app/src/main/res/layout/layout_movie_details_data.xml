@@ -49,9 +49,9 @@
         android:id="@+id/tvRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginHorizontal="@dimen/text_margin"
         android:textAlignment="viewStart"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
         app:drawableStartCompat="@android:drawable/star_on"
         app:layout_constraintStart_toEndOf="@+id/cardPoster"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -61,12 +61,25 @@
         android:id="@+id/tvRuntime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_marginHorizontal="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
         app:layout_constraintBaseline_toBaselineOf="@id/tvRate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/tvRate" />
+
+
+    <TextView
+        android:id="@+id/tvGenre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/text_margin"
+        android:textAlignment="viewStart"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardPoster"
+        app:layout_constraintTop_toBottomOf="@+id/tvRate" />
+
 
     <TextView
         android:id="@+id/tvOverviewLabel"

@@ -15,12 +15,21 @@
         android:background="@color/primary"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/progress">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
@@ -30,4 +39,21 @@
             tools:itemCount="1"
             tools:listitem="@layout/item_movie" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <include
+        android:id="@+id/layoutError"
+        layout="@layout/layout_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/progress" />
+
+    <include
+        android:id="@+id/layoutEmpty"
+        layout="@layout/layout_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/progress" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,14 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.moviesappxml.R
+import com.example.moviesappxml.common.ui.models.getUserFriendlyErrorMessage
 import com.example.moviesappxml.databinding.FragmentMovieListBinding
 import com.example.moviesappxml.details.ui.fragments.DetailsFragment
 import com.example.moviesappxml.list.ui.actions.MoviesListUiActions
@@ -26,6 +29,7 @@ import com.example.moviesappxml.list.ui.adapters.MovieAdapter
 import com.example.moviesappxml.list.ui.adapters.MovieComparator
 import com.example.moviesappxml.list.ui.adapters.MovieLoadStateAdapter
 import com.example.moviesappxml.list.ui.viewmodels.MoviesListViewModel
+import com.example.moviesappxml.utils.ErrorParser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -39,6 +43,7 @@ class MovieListFragment : Fragment(), MenuProvider {
 
     private var isGrid = true
     val viewModel: MoviesListViewModel by viewModels<MoviesListViewModel>()
+    var pagingAdapter: MovieAdapter? = null
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
@@ -56,15 +61,25 @@ class MovieListFragment : Fragment(), MenuProvider {
 
         initializeList()
 
+        handleClicks()
+
+        getMovies()
+
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         return view
     }
 
+    private fun handleClicks() {
+        binding.layoutError.btnRetry.setOnClickListener {
+            pagingAdapter?.refresh()
+        }
+    }
+
     private fun initializeList() {
         setColumnCount()
-        val pagingAdapter = MovieAdapter(
+        pagingAdapter = MovieAdapter(
             MovieComparator,
             onMovieClick = { id ->
                 binding.root.findNavController().navigate(
@@ -76,7 +91,31 @@ class MovieListFragment : Fragment(), MenuProvider {
                     false -> viewModel.onAction(MoviesListUiActions.removeFavorite(id))
                 }
             })
-        binding.list.adapter = pagingAdapter.withLoadStateHeaderAndFooter(
+
+        lifecycleScope.launch {
+
+            pagingAdapter?.addLoadStateListener { loadState ->
+                binding.progress.isVisible =
+                    loadState.refresh is LoadState.Loading && pagingAdapter?.itemCount == 0
+                binding.layoutError.root.isVisible =
+                    loadState.refresh is LoadState.Error && pagingAdapter?.itemCount == 0
+
+                //Handle empty list
+                binding.layoutEmpty.root.isVisible = loadState.refresh is LoadState.NotLoading &&
+                        pagingAdapter?.itemCount == 0
+
+                // Handle error state
+                if (loadState.refresh is LoadState.Error) {
+                    handleError((loadState.refresh as LoadState.Error).error)
+                }
+
+                // Cancel refresh indicator if needed
+                if (binding.swipeRefresh.isRefreshing && loadState.refresh !is LoadState.Loading) {
+                    binding.swipeRefresh.isRefreshing = false
+                }
+            }
+        }
+        binding.list.adapter = pagingAdapter?.withLoadStateHeaderAndFooter(
             header = MovieLoadStateAdapter({ getMovies() }),
             footer = MovieLoadStateAdapter({ getMovies() })
         )
@@ -85,15 +124,20 @@ class MovieListFragment : Fragment(), MenuProvider {
             viewModel.moviesListFlow.collectLatest { pagingData ->
                 if (binding.swipeRefresh.isRefreshing)
                     binding.swipeRefresh.isRefreshing = false
-                pagingAdapter.submitData(pagingData)
+                pagingAdapter?.submitData(pagingData)
             }
+
         }
 
         binding.swipeRefresh.setOnRefreshListener {
-            pagingAdapter.refresh()
+            pagingAdapter?.refresh()
         }
+    }
 
-        getMovies()
+    private fun handleError(error: Throwable) {
+        val errorModel = ErrorParser.parseThrowable(error)
+        val message = errorModel.getUserFriendlyErrorMessage(resources)
+        binding.layoutError.tvErrorMessage.text = message
     }
 
     private fun getMovies() {

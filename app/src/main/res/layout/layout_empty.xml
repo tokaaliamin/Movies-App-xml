@@ -8,16 +8,16 @@
         android:id="@+id/imageview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/placeholder_error"
+        android:src="@drawable/placeholder_empty_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.8" />
 
     <TextView
-        android:id="@+id/tvErrorMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/no_movies_found"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toBottomOf="@+id/imageview"
@@ -27,12 +27,4 @@
         app:layout_constraintVertical_bias="0.85"
         app:layout_constraintWidth_percent="0.8" />
 
-    <Button
-        android:id="@+id/btnRetry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/retry"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvErrorMessage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

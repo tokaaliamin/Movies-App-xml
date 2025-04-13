@@ -13,6 +13,8 @@
 
         <ImageView
             android:id="@+id/ivPoster"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="@dimen/movie_poster_height"
             app:layout_constraintTop_toTopOf="parent" />

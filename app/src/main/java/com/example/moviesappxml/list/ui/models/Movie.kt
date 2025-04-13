@@ -1,6 +1,12 @@
 package com.example.moviesappxml.list.ui.models
 
-data class Movie(val id: Int?, val title: String?, val posterUrl: String?, val releaseDate: String?)
+data class Movie(
+    val id: Int?,
+    val title: String?,
+    val posterUrl: String?,
+    val releaseDate: String?,
+    val isFavorite: Boolean = false
+)
 
 fun getMovieTemp(): Movie {
     return Movie(

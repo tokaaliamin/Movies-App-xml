@@ -8,9 +8,10 @@ import javax.inject.Inject
 
 class MoviesListLocalDataSource @Inject constructor(private val database: AppDatabase) {
 
-    fun fetchMoviesList(): PagingSource<Int, Movie> {
-        return database.movieDao().fetchMoviesList()
+    fun fetchMoviesListWithFavoriteState(): PagingSource<Int, Movie> {
+        return database.movieDao().getAllMoviesWithFavoriteStatus()
     }
+
 
     fun cacheMovies(movies: List<Movie>) {
         database.movieDao().insertAll(movies)

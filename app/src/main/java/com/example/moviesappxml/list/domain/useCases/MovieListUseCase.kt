@@ -11,4 +11,12 @@ class MovieListUseCase @Inject constructor(private val moviesListRepo: MoviesLis
     operator fun invoke(): Flow<PagingData<Movie>> {
         return moviesListRepo.getMovies()
     }
+
+    suspend fun addFavorite(id: Int) {
+        moviesListRepo.addFavorite(id)
+    }
+
+    suspend fun removeFavorite(id: Int) {
+        moviesListRepo.removeFavorite(id)
+    }
 }

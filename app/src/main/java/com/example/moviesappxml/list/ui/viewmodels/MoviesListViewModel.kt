@@ -12,6 +12,7 @@ import com.example.moviesappxml.list.ui.models.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,18 @@ class MoviesListViewModel @Inject constructor(private val useCase: MovieListUseC
         when (action) {
             is MoviesListUiActions.getMovies -> {
                 useCase.invoke()
+            }
+
+            is MoviesListUiActions.addFavorite -> {
+                viewModelScope.launch {
+                    useCase.addFavorite(action.id)
+                }
+            }
+
+            is MoviesListUiActions.removeFavorite -> {
+                viewModelScope.launch {
+                    useCase.removeFavorite(action.id)
+                }
             }
         }
     }

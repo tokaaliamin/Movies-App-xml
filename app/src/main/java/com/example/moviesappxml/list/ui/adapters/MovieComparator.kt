@@ -1,4 +1,4 @@
-package com.example.moviesappxml.list.ui.fragments
+package com.example.moviesappxml.list.ui.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.moviesappxml.list.ui.models.Movie

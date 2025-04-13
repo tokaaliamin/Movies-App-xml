@@ -21,12 +21,25 @@ data class Movie(
     val releaseDate: String? = null,
     @ColumnInfo(name = "title")
     @SerialName("title")
-    val title: String? = null
-)
+    val title: String? = null,
+    @ColumnInfo(name = "isFavorite")
+    val isFavorite: Boolean = false
+) {
+    constructor(
+        id: Int?,
+        posterPath: String?,
+        releaseDate: String?,
+        title: String?,
+        isFavorite: Int
+    ) : this(
+        id, posterPath, releaseDate, title, isFavorite == 1
+    )
+}
 
 fun Movie.toDomainMovie() = com.example.moviesappxml.list.domain.models.Movie(
     id ?: 0,
     posterPath,
     releaseDate,
-    title
+    title,
+    isFavorite
 )

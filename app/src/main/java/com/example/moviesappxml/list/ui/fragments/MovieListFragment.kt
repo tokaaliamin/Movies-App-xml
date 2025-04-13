@@ -23,6 +23,7 @@ import com.example.moviesappxml.databinding.FragmentMovieListBinding
 import com.example.moviesappxml.details.ui.fragments.DetailsFragment
 import com.example.moviesappxml.list.ui.actions.MoviesListUiActions
 import com.example.moviesappxml.list.ui.adapters.MovieAdapter
+import com.example.moviesappxml.list.ui.adapters.MovieComparator
 import com.example.moviesappxml.list.ui.adapters.MovieLoadStateAdapter
 import com.example.moviesappxml.list.ui.viewmodels.MoviesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,11 +64,17 @@ class MovieListFragment : Fragment(), MenuProvider {
 
     private fun initializeList() {
         setColumnCount()
-        val pagingAdapter = MovieAdapter(MovieComparator,
-            { id ->
+        val pagingAdapter = MovieAdapter(
+            MovieComparator,
+            onMovieClick = { id ->
                 binding.root.findNavController().navigate(
                     R.id.action_list_to_details,
                     Bundle().apply { putInt(DetailsFragment.ARG_MOVIE_ID, id) })
+            }, onFavoriteToggleClick = { id, isFavorite ->
+                when (isFavorite) {
+                    true -> viewModel.onAction(MoviesListUiActions.addFavorite(id))
+                    false -> viewModel.onAction(MoviesListUiActions.removeFavorite(id))
+                }
             })
         binding.list.adapter = pagingAdapter.withLoadStateHeaderAndFooter(
             header = MovieLoadStateAdapter({ getMovies() }),

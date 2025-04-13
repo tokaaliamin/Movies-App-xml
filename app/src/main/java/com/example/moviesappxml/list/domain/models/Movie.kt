@@ -10,7 +10,8 @@ data class Movie(
     val id: Int,
     val posterSuffix: String? = null,
     val releaseDate: String? = null,
-    val title: String? = null
+    val title: String? = null,
+    val isFavorite: Boolean = false
 )
 
 fun Movie.toUiMovie(): com.example.moviesappxml.list.ui.models.Movie {
@@ -18,6 +19,7 @@ fun Movie.toUiMovie(): com.example.moviesappxml.list.ui.models.Movie {
         id,
         title,
         ImagesUseCase().invoke(posterSuffix, ImageSize.POSTER),
-        releaseDate
+        releaseDate,
+        isFavorite
     )
 }

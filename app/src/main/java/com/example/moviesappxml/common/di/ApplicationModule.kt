@@ -8,6 +8,7 @@ import com.example.moviesappxml.common.data.remote.RetrofitClient
 import com.example.moviesappxml.details.data.remote.dataSources.MovieDetailsDataSource
 import com.example.moviesappxml.details.data.remote.dataSources.MovieDetailsRemoteDataSource
 import com.example.moviesappxml.details.data.remote.services.MovieDetailsService
+import com.example.moviesappxml.list.data.local.dataSources.FavoriteLocalDataSource
 import com.example.moviesappxml.list.data.local.dataSources.MoviesListLocalDataSource
 import com.example.moviesappxml.list.data.local.database.AppDatabase
 import com.example.moviesappxml.list.data.models.Movie
@@ -36,6 +37,9 @@ abstract class ApplicationModule {
     companion object {
         @Provides
         fun provideMoviesListLocalDataSource(db: AppDatabase) = MoviesListLocalDataSource(db)
+
+        @Provides
+        fun provideFavoriteLocalDataSource(db: AppDatabase) = FavoriteLocalDataSource(db)
 
         @Provides
         fun provideMoviesListService() =

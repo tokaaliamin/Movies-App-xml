@@ -10,7 +10,8 @@ import com.example.moviesappxml.list.ui.viewholders.MovieViewHolder
 
 class MovieAdapter(
     diffCallback: DiffUtil.ItemCallback<Movie>,
-    private val onMovieClick: (movieId: Int) -> Unit
+    private val onMovieClick: (movieId: Int) -> Unit,
+    private val onFavoriteToggleClick: (movieId: Int, isFavorite: Boolean) -> Unit
 ) : PagingDataAdapter<Movie, MovieViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -22,7 +23,8 @@ class MovieAdapter(
                 false
             ),
             parent.context,
-            onMovieClick
+            onMovieClick,
+            onFavoriteToggleClick
         )
 
     }

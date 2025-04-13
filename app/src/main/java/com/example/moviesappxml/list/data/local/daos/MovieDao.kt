@@ -9,13 +9,17 @@ import com.example.moviesappxml.list.data.models.Movie
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM movie")
-    fun fetchMoviesList(): PagingSource<Int, Movie>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: List<Movie>)
 
     @Query("DELETE FROM movie")
     fun deleteAllMovies()
+
+    @Query(
+        "SELECT movie.id, movie.poster_path, movie.release_date, movie.title, " +
+                "CASE WHEN favorite.movie_id IS NOT NULL THEN 1 ELSE 0 END AS isFavorite " +
+                "FROM movie LEFT JOIN favorite ON movie.id = favorite.movie_id"
+    )
+    fun getAllMoviesWithFavoriteStatus(): PagingSource<Int, Movie>
 
 }

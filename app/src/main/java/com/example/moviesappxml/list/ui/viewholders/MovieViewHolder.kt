@@ -11,12 +11,14 @@ import com.example.moviesappxml.list.ui.models.Movie
 class MovieViewHolder(
     binding: ItemMovieBinding,
     private val context: Context,
-    private val onMovieClick: (movieId: Int) -> Unit
+    private val onMovieClick: (movieId: Int) -> Unit,
+    private val onFavoriteToggleClick: (movieId: Int, isFavorite: Boolean) -> Unit
 ) :
     RecyclerView.ViewHolder(binding.root) {
     private val posterView: ImageView = binding.ivPoster
     private val titleView: TextView = binding.tvTitle
     private val releaseDateView: TextView = binding.tvReleaseDate
+    private val isFavoriteView: ImageView = binding.ivFavorite
 
     private var selectedMovie: Movie? = null
 
@@ -26,6 +28,12 @@ class MovieViewHolder(
                 onMovieClick(id)
             }
         }
+
+        binding.ivFavorite.setOnClickListener {
+            selectedMovie?.let { movie ->
+                onFavoriteToggleClick(movie.id!!, movie.isFavorite.not())
+            }
+        }
     }
 
     fun bind(item: Movie) {
@@ -33,5 +41,6 @@ class MovieViewHolder(
         titleView.text = item.title
         Glide.with(context).load(item.posterUrl).centerCrop().into(posterView)
         releaseDateView.text = item.releaseDate
+        isFavoriteView.isSelected = item.isFavorite
     }
 }

@@ -45,16 +45,24 @@
         app:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />
 
 
+    <ImageView
+        android:id="@+id/ivRate"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_margin="@dimen/text_margin"
+        android:src="@drawable/iv_star"
+        app:layout_constraintStart_toEndOf="@+id/cardPoster"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
     <TextView
         android:id="@+id/tvRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
         android:textAlignment="viewStart"
         android:textAppearance="?attr/textAppearanceListItem"
-        app:drawableStartCompat="@android:drawable/star_on"
-        app:layout_constraintStart_toEndOf="@+id/cardPoster"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivRate"
+        app:layout_constraintStart_toEndOf="@+id/ivRate"
+        app:layout_constraintTop_toTopOf="@+id/ivRate" />
 
 
     <TextView

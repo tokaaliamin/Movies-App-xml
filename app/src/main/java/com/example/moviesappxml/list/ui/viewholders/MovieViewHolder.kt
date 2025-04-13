@@ -40,7 +40,10 @@ class MovieViewHolder(
     fun bind(item: Movie) {
         selectedMovie = item
         titleView.text = item.title
-        Glide.with(context).load(item.posterUrl).placeholder(R.drawable.placeholder_image)
+        Glide.with(context)
+            .load(item.posterUrl)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.placeholder_image)
             .centerCrop().into(posterView)
         releaseDateView.text = item.releaseDate
         isFavoriteView.isSelected = item.isFavorite

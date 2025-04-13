@@ -15,10 +15,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.moviesappxml.R
 import com.example.moviesappxml.databinding.FragmentMovieListBinding
+import com.example.moviesappxml.details.ui.fragments.DetailsFragment
 import com.example.moviesappxml.list.ui.actions.MoviesListUiActions
 import com.example.moviesappxml.list.ui.adapters.MovieAdapter
 import com.example.moviesappxml.list.ui.adapters.MovieLoadStateAdapter
@@ -61,7 +63,12 @@ class MovieListFragment : Fragment(), MenuProvider {
 
     private fun initializeList() {
         setColumnCount()
-        val pagingAdapter = MovieAdapter(MovieComparator)
+        val pagingAdapter = MovieAdapter(MovieComparator,
+            { id ->
+                binding.root.findNavController().navigate(
+                    R.id.action_list_to_details,
+                    Bundle().apply { putInt(DetailsFragment.ARG_MOVIE_ID, id) })
+            })
         binding.list.adapter = pagingAdapter.withLoadStateHeaderAndFooter(
             header = MovieLoadStateAdapter({ getMovies() }),
             footer = MovieLoadStateAdapter({ getMovies() })

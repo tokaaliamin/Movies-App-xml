@@ -1,4 +1,4 @@
-package com.example.moviesappxml.common.domain.models
+package com.example.moviesappxml.details.domain.models
 
 
 import kotlinx.serialization.Serializable

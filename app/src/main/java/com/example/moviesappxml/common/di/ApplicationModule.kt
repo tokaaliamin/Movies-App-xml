@@ -5,6 +5,9 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.RemoteMediator
 import androidx.room.Room
 import com.example.moviesappxml.common.data.remote.RetrofitClient
+import com.example.moviesappxml.details.data.remote.dataSources.MovieDetailsDataSource
+import com.example.moviesappxml.details.data.remote.dataSources.MovieDetailsRemoteDataSource
+import com.example.moviesappxml.details.data.remote.services.MovieDetailsService
 import com.example.moviesappxml.list.data.local.dataSources.MoviesListLocalDataSource
 import com.example.moviesappxml.list.data.local.database.AppDatabase
 import com.example.moviesappxml.list.data.models.Movie
@@ -22,6 +25,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class ApplicationModule {
+    @Binds
+    abstract fun bindMovieDetailsRemoteDataSource(dataSource: MovieDetailsRemoteDataSource): MovieDetailsDataSource
 
     @OptIn(ExperimentalPagingApi::class)
     @Binds
@@ -35,6 +40,11 @@ abstract class ApplicationModule {
         @Provides
         fun provideMoviesListService() =
             RetrofitClient.retrofitClient.create(MoviesListService::class.java)
+
+        @Provides
+        fun provideMovieDetailsService() =
+            RetrofitClient.retrofitClient.create(MovieDetailsService::class.java)
+
     }
 }
 

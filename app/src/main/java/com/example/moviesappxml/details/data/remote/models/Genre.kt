@@ -1,4 +1,4 @@
-package com.example.moviesappxml.common.ui.models
+package com.example.moviesappxml.details.data.remote.models
 
 
 import kotlinx.serialization.SerialName
@@ -10,4 +10,9 @@ data class Genre(
     val id: Int? = null,
     @SerialName("name")
     val name: String? = null
+)
+
+fun Genre.toDomainGenre() = com.example.moviesappxml.details.domain.models.Genre(
+    id,
+    name
 )

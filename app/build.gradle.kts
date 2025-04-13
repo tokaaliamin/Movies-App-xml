@@ -69,6 +69,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     testImplementation(libs.kotlinx.serialization.json)
 
+    // Navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
     // Glide
     implementation(libs.github.glide)
 

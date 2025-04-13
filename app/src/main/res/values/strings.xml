@@ -3,4 +3,10 @@
     <string name="movies_app">Movies App</string>
     <string name="column_count">Column Count</string>
     <string name="retry">Retry</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="check_your_internet_connection">Check your internet connection</string>
+    <string name="something_went_wrong_please_try_again">Something went wrong, please try again</string>
+    <string name="overview">Overview</string>
+    <string name="format_runtime">%1$dh %2$dm</string>
 </resources>

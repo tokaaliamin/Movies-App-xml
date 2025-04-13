@@ -115,6 +115,7 @@ class DetailsFragment : Fragment() {
             tvRate.text = DecimalFormat("#.##").format(movie.rating)
             tvRuntime.text = getString(R.string.format_runtime, hours, mins)
             tvOverview.text = movie.description
+            tvGenre.text = movie.genres?.map { it.name }?.joinToString(", ")
             Glide.with(requireContext())
                 .load(movie.backdropUrl)
                 .placeholder(R.drawable.placeholder_image)

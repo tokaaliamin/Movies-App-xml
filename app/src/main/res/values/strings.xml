@@ -9,4 +9,5 @@
     <string name="something_went_wrong_please_try_again">Something went wrong, please try again</string>
     <string name="overview">Overview</string>
     <string name="format_runtime">%1$dh %2$dm</string>
+    <string name="no_movies_found">No movies found</string>
 </resources>

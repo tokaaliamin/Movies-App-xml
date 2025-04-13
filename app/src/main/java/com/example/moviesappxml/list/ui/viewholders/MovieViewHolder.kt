@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.moviesappxml.R
 import com.example.moviesappxml.databinding.ItemMovieBinding
 import com.example.moviesappxml.list.ui.models.Movie
 
@@ -39,7 +40,11 @@ class MovieViewHolder(
     fun bind(item: Movie) {
         selectedMovie = item
         titleView.text = item.title
-        Glide.with(context).load(item.posterUrl).centerCrop().into(posterView)
+        Glide.with(context)
+            .load(item.posterUrl)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.placeholder_image)
+            .centerCrop().into(posterView)
         releaseDateView.text = item.releaseDate
         isFavoriteView.isSelected = item.isFavorite
     }

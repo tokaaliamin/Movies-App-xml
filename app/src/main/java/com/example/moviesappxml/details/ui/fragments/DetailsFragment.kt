@@ -115,8 +115,18 @@ class DetailsFragment : Fragment() {
             tvRate.text = DecimalFormat("#.##").format(movie.rating)
             tvRuntime.text = getString(R.string.format_runtime, hours, mins)
             tvOverview.text = movie.description
-            Glide.with(requireContext()).load(movie.backdropUrl).centerCrop().into(ivBackdrop)
-            Glide.with(requireContext()).load(movie.posterUrl).centerCrop().into(ivPoster)
+            Glide.with(requireContext())
+                .load(movie.backdropUrl)
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.placeholder_image)
+                .centerCrop()
+                .into(ivBackdrop)
+
+            Glide.with(requireContext())
+                .load(movie.posterUrl)
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.placeholder_image)
+                .centerCrop().into(ivPoster)
         }
     }
 
